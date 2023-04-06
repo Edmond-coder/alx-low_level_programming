@@ -8,7 +8,7 @@ int _sqrt(int lower_bound, int upper_bound);
  * Return: The square root of n.
  */
 
-int _sqrt_recursio(int n)
+int _sqrt_recursion(int n)
 {
 	if (n < 0)
 		return -1;
