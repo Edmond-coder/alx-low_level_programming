@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 /**
  *main - function takes 2 numbers, multiply them and then print the result;
@@ -19,6 +20,6 @@ int main(int argc, char *argv[])
 	n1 = atoi(argv[1]);
 	n2 = atoi(argv[2]);
 	result = n1 * n2;
-	printf("%s\n", result);
+	printf("%d\n", result);
 	return (0);
 }
