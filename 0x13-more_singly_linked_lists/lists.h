@@ -30,4 +30,8 @@ size_t print_listint_safe(const listint_t *head);
 size_t free_listint_safe(listint_t **h);
 void free_list(listint_t *head);
 listint_t *find_listint_loop(listint_t *head);
+size_t recursion_printer(const listint_t *h);
+size_t print_listint(const listint_t *h);
+size_t listint_len(const listint_t *h);
+listint_t *add_nodeint(listint_t **head, const int n);
 #endif /* _LISTS_H_ */
