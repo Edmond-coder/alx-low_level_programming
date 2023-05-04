@@ -14,9 +14,6 @@ size_t print_listint_safe(const listint_t *head)
 	const listint_t *current, *runner;
 	size_t count = 0;
 
-	if (!head)
-		exit(98);
-
 	current = head;
 	while (current)
 	{
