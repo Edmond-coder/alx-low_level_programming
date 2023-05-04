@@ -19,10 +19,10 @@ size_t print_listint_safe(const listint_t *head)
 	{
 		runner = head;
 		printf("[%p] %d\n", (void *)current, current->n);
-		current = current -> next;
+		current = curren ->next;
 		count++;
 
-		while(count > rev_count)
+		while (count > rev_count)
 		{
 			if (runner == current)
 			{
