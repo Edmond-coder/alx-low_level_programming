@@ -20,7 +20,7 @@ size_t free_listint_safe(listint_t **h)
 	while (current != NULL)
 	{
 		count++;
-		if (current < current->next)
+		if (current <= current->next)
 		{
 			free(current);
 			break;
