@@ -1,49 +1,39 @@
 #include "main.h"
+#include <stdlib.h>
 
 /**
- * read_textfile - reads a text file and prints it to the POSIX standard output
- * @filename: the name of the file to read
- * @letters: the maximum number of letters to read and print
+ * read_textfile - Reads a text file and prints it to POSIX stdout.
+ * @filename: A pointer to the name of the file.
+ * @letters: The number of letters the
+ *           function should read and print.
  *
- * Return: the actual number of letters read and printed, or -1 on failure
+ * Return: If the function fails or filename is NULL - 0.
+ *         O/w - the actual number of bytes the function can read and print.
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	ssize_t bytes_read, bytes_written;
-	char *buffer;int fd;
+	ssize_t o, r, w;
+	char *buffer;
 
 	if (filename == NULL)
-		return (-1);
+		return (0);
 
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return (-1);
-
-	buffer = malloc(letters);
+	buffer = malloc(sizeof(char) * letters);
 	if (buffer == NULL)
-	{
-		close(fd);
-		return (-1);
-	}
+		return (0);
 
-	bytes_read = read(fd, buffer, letters);
-	if (bytes_read == -1)
+	o = open(filename, O_RDONLY);
+	r = read(o, buffer, letters);
+	w = write(STDOUT_FILENO, buffer, r);
+
+	if (o == -1 || r == -1 || w == -1 || w != r)
 	{
 		free(buffer);
-		close(fd);
-		return (-1);
-	}
-
-	bytes_written = write(STDOUT_FILENO, buffer, bytes_read);
-	if (bytes_written == -1 || bytes_written != bytes_read)
-	{
-		free(buffer);
-		close(fd);
-		return (-1);
+		return (0);
 	}
 
 	free(buffer);
-	close(fd);
+	close(o);
 
-	return (bytes_read);
+	return (w);
 }
