@@ -1,41 +1,49 @@
 #include "main.h"
-/**
-* read_textfile - read a text file and print it to the standard output.
-* @filename: the name of the file to be read.
-* @letters: the number of letters it should read and print.
-* Return: the number of letters it could read and print.
-*/
 
+/**
+ * read_textfile - reads a text file and prints it to the POSIX standard output
+ * @filename: the name of the file to read
+ * @letters: the maximum number of letters to read and print
+ *
+ * Return: the actual number of letters read and printed, or -1 on failure
+ */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	char *buffer;
-	ssize_t file, n_read, n_write;
+	ssize_t bytes_read, bytes_written;
+	char *buffer;int fd;
 
 	if (filename == NULL)
-	{
-		return (0);
-	}
+		return (-1);
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (-1);
+
 	buffer = malloc(letters);
 	if (buffer == NULL)
-		return (0);
-	file = open(filename, O_RDONLY);
-	if (file == -1)
-		return (0);
-	n_read = read(file, buffer, letters);
-	if (n_read == -1)
 	{
-		close(file);
-		free(buffer);
-		return (0);
+		close(fd);
+		return (-1);
 	}
-	n_write = write(STDOUT_FILENO, buffer, n_read);
-	if (n_write == -1)
+
+	bytes_read = read(fd, buffer, letters);
+	if (bytes_read == -1)
 	{
-		close(file);
 		free(buffer);
-		return (0);
+		close(fd);
+		return (-1);
 	}
-	close(file);
+
+	bytes_written = write(STDOUT_FILENO, buffer, bytes_read);
+	if (bytes_written == -1 || bytes_written != bytes_read)
+	{
+		free(buffer);
+		close(fd);
+		return (-1);
+	}
+
 	free(buffer);
-	return (n_write);
+	close(fd);
+
+	return (bytes_read);
 }
