@@ -2,12 +2,11 @@
 #include <stdio.h>
 
 /**
- * print_char - Prints a character.
+ * print_integer - Prints an integer.
  * @args: The va_list containing the argument.
  */
-
-void print_char(va_list args)
+void print_integer(va_list args)
 {
 	int value = va_arg(args, int);
-	printf("%c", value);
+	printf("%d", value);
 }

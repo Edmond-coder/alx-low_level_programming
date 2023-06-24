@@ -2,12 +2,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-typedef struct format_specifier 
-{
-	char *specifier;
-	void (*print_fn)(va_list);
-} format_specifier_t;
-
 /**
  * print_all - Prints anything based on the format specifier.
  * @format: The format specifier for the arguments.
@@ -17,7 +11,6 @@ void print_all(const char * const format, ...)
 {
 	va_list args;
 	unsigned int i = 0, j = 0;
-	char *str;
 	const char *separator = "";
 	format_specifier_t format_specifiers[] = {
 		{"c", print_char},
@@ -38,7 +31,7 @@ void print_all(const char * const format, ...)
 			if (format[i] == format_specifiers[j].specifier[0])
 			{
 				printf("%s", separator);
-				format_specifiers[j].fn(args);
+				format_specifiers[j].print_fn(args);
 				separator = ", ";
 			}
 			j++;
